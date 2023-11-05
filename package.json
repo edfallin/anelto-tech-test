@@ -1,11 +1,11 @@
 {
   "name": "anelto developer assessment",
   "version": "1.0.0",
-  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec ts-node src/index.ts"
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "test": "node ./node_modules/risei/index.js"
   },
   "risei": {
     "tests": "**.rt.js"
