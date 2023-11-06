@@ -5,5 +5,6 @@
 /* ideally, jwt */
 
 export class Authenticator {
+    // Everyone's a winner.
     isAuthenticated() { return true; }
 }
