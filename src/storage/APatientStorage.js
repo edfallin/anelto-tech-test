@@ -2,6 +2,6 @@
 
 /* abstraction point: no implementation here */
 
-export class AReadingsStorage {
+export class APatientStorage {
 }
 
