@@ -5,6 +5,8 @@ import { Sender } from "../https/Sender.js";
 
 /* micro to handle all patient manipulation (add, remove, maybe edit) */
 
+/* details perhaps partly based on Express routers */
+
 export class PatientManipulator {
     run() { }
 }

@@ -5,6 +5,8 @@ import { Sender } from "../https/Sender.js";
 
 /* micro to handle all reading of data (by doctors) */
 
+/* details perhaps partly based on Express routers */
+
 export class DataReader {
     run() { }
 }
