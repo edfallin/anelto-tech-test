@@ -1,7 +1,6 @@
 /**/
 
 import { PatientReading } from "./PatientReading.js";
-import { AReadingStorage } from "../storage/AReadingStorage.js";
 import { ReadingStorage } from "../storage/ReadingStorage.js";
 
 export class PatientReadings {
