@@ -16,7 +16,8 @@ export class Receiver {
         // let router = express.Router();
         
         /* maybe emits a new CustomEvent when something is heard, 
-           or maybe runs a provided delegate */
+           which composing class can listen to with 
+           addEventListener() on instance of this class */
        
        /* custom events:  https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent */
     }
