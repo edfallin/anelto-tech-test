@@ -18,5 +18,21 @@ export class EventWirerTests extends ATestSource {
         { for: "When no .eventName property exists, returns EventNames.noSuchEvent.", /* good */
             in: [ "{ somethingToConsider: \"AddReading\", random: \"value\", meaningless: \"property\" }" ], 
             out: EventNames.noSuchEvent },
+
+        { of: "invokeMethod", 
+            with: [ new Wireable(), /* empty arg for Map: */ [ ] ] 
+        },
+        { for: "When called, the provided method is invoked and its output returned.", /* good */
+          in: [ Wireable.prototype.callable, "instance field is " ],
+          out: "instance field is field-value" }
+
     ];
+}
+
+class Wireable {
+    #field = "field-value";
+
+    callable(text) {
+        return text + this.#field;
+    }
 }

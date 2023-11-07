@@ -10,9 +10,9 @@ export class EventWirer {
     
     static #knownEventNames = EventNames.namesList();
 
-    constructor(instance, /* Map: */ methodsByName) {
+    constructor(instance, /* [ [k,v], [k,v], ... ]: */ methodsByName) {
         this.#instance = instance;
-        this.#methodsByName = methodsByName;
+        this.#methodsByName = new Map(methodsByName);
     }
 
     dispatch(text) {
