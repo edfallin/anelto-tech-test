@@ -10,12 +10,12 @@ export class EventWirer {
     
     static #knownEventNames = EventNames.namesList();
 
-    constructor(instance, /* [ [k,v], [k,v], ... ]: */ methodsByName) {
+    constructor(instance, methodsByName) /* verified */ {
         this.#instance = instance;
         this.#methodsByName = new Map(methodsByName);
     }
 
-    dispatch(text) {
+    dispatch(text) /* passed */ {
         let name = this.parseEventName(text);
 
         // This event is not observed by this listener.
@@ -30,7 +30,7 @@ export class EventWirer {
 
     parseEventName(text) /* passed */ {
         // Lighter than early JSON parsing.
-        let toFind = /eventName: "(.*?)"/;  // Not /g: should only be found once.
+        let toFind = /"?eventName"?: "(.*?)"/;  // Not /g: should only be found once.
         let found = text.match(toFind);
         
         // No property at all.
@@ -49,7 +49,7 @@ export class EventWirer {
         return name;
     }
 
-    invokeMethod(method, text) {
+    invokeMethod(method, text) /* passed */ {
         // OOP context.
         method = method.bind(this.#instance);
 
