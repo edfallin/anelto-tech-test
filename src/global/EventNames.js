@@ -4,10 +4,13 @@
 
 public class EventNames {
     // Readings domain.
-    addReading = "AddReading";
-    getReadings = "GetReadings";
+    static addReading = "AddReading";
+    static getReadings = "GetReadings";
 
     // Patients domain.
-    addPatient = "AddPatient";
-    removePatient = "RemovePatient";
+    static addPatient = "AddPatient";
+    static removePatient = "RemovePatient";
+    
+    // Fail condition.
+    static noSuchEvent = "NoSuchEvent";
 }

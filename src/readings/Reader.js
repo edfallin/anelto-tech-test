@@ -8,7 +8,11 @@ import { Sender } from "../pub-sub/Sender.js";
 /* details perhaps partly based on Express routers */
 
 export class Reader {
-    run() { }
+    run() { 
+        // HTTPS or Axios call to register self
+        // something to listen, perhaps as Express app, seen elsewhere
+    }
+    
     getReadings() { }
 }
 
