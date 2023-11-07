@@ -13,4 +13,10 @@ export class EventNames {
 
     // Fail condition.
     static noSuchEvent = "NoSuchEvent";
+    
+    static namesList() {
+        return [ EventNames.addReading, EventNames.getReadings, 
+                 EventNames.addPatient, EventNames.removePatient, 
+                 EventNames.noSuchEvent ];
+    }
 }

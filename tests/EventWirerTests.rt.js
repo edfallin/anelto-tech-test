@@ -9,13 +9,13 @@ export class EventWirerTests extends ATestSource {
         { on: EventWirer, with: [ ] },
 
         { of: "parseEventName" },
-        { for: "When known event name exists as .eventName, returns that name.", 
+        { for: "When known event name exists as .eventName, returns that name.", /* good */
             in: [ "{ eventName: \"AddReading\", random: \"value\", meaningless: \"property\" }" ], 
             out: EventNames.addReading },
-        { for: "When unknown event name exists as .eventName, returns EventNames.noSuchEvent.", 
+        { for: "When unknown event name exists as .eventName, returns EventNames.noSuchEvent.", /* good */
             in: [ "{ eventName: \"InventedName\", random: \"value\", meaningless: \"property\" }" ], 
             out: EventNames.noSuchEvent },
-        { for: "When no .eventName property exists, returns EventNames.noSuchEvent.", 
+        { for: "When no .eventName property exists, returns EventNames.noSuchEvent.", /* good */
             in: [ "{ somethingToConsider: \"AddReading\", random: \"value\", meaningless: \"property\" }" ], 
             out: EventNames.noSuchEvent },
     ];
