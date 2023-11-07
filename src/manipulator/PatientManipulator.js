@@ -1,7 +1,7 @@
 /**/
 
-import { Receiver } from "../https/Receiver.js";
-import { Sender } from "../https/Sender.js";
+import { Receiver } from "../pub-sub/Receiver.js";
+import { Sender } from "../pub-sub/Sender.js";
 import { Patients } from "../patients/Patients.js";
 
 /* micro to handle all patient manipulation (add, remove, maybe edit) */

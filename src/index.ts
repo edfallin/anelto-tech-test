@@ -85,6 +85,7 @@ const messageQueue = new MessageQueue();
 
 // region HTTPS listeners that route to MessageQueue instance
 
+/* Call https:localhost:3033//register, body = URL, to observe all events. */
 app.post("/register", (req: Request, res: Response) => {
   const { serviceUrl } = req.body;
   
@@ -101,6 +102,7 @@ app.get("/", (req, res) => {
   res.send("Server is running.");
 });
 
+/* Call https://localhost:3033/send-message, body = text, to announce to all observers */
 app.post("/send-message", (req: Request, res: Response) => {
   const { message } = req.body;
   
