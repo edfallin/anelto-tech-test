@@ -1,8 +1,8 @@
 /**/
 
 import { ATestSource } from "risei/ATestSource";
-import { EventWirer } from "../src/shared/EventWirer.js";
-import { EventNames } from "../src/shared/EventNames.js";
+import { EventWirer } from "../src/global/EventWirer.js";
+import { EventNames } from "../src/global/EventNames.js";
 
 export class EventWirerTests extends ATestSource {
     tests = [
