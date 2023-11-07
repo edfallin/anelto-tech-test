@@ -8,11 +8,11 @@ export class EventWirer {
     #instance;
     #methodsByName;
 
-    wire(instance, /* Map: */ methodsByName) {
+    constructor(instance, /* Map: */ methodsByName) {
         this.#instance = instance;
         this.#methodsByName = methodsByName;
     }
-    
+
     dispatch(text) {
         let map = new Map();  /* cruft */
 
@@ -27,17 +27,18 @@ export class EventWirer {
 
         return this.invokeMethod(method, text);
     }
-    
+
     parseEventName(text) {
+        console.log(`cruft : called`);
     }
-    
+
     invokeMethod(method, text) {
-        // OOP context.
-        method = method.bind(this.#instance);
-        
-        // Actually invoking.
-        let output = method(text);
-        
-        return output;
+        // // OOP context.
+        // method = method.bind(this.#instance);
+        //
+        // // Actually invoking.
+        // let output = method(text);
+        //
+        // return output;
     }
 }

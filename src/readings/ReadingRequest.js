@@ -1,7 +1,7 @@
 /**/
 
-import { EventNames } from "../global/EventNames.js";
-import { Event_ } from "../global/Event_.js";
+import { EventNames } from "../shared/EventNames.js";
+import { Event_ } from "../shared/Event_.js";
 
 export class ReadingRequest extends Event_ {
     patientId;
