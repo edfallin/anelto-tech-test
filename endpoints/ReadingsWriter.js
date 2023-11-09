@@ -6,10 +6,22 @@ let express = require("express");
 let app = express();
 let service;
 
-let source = import("../src/readings/Writer.js").then(source => service = new source.Writer());
+let source = import("../src/readings/Writer.js")
+    .then(source => service = new source.Writer());
 
 app.post("/add/", (req, res) => {
-    res.send(service.test);
+    console.log(`cruft : req.body:`, req.body);
+    req.body = JSON.stringify({ reading: true });
+    console.log(`cruft : req.body:`, req.body);
+    let didStore = service.storeReading(req.body);
+    
+    if (didStore) {
+        res.ok = true;
+        res.send("OK: didStore returned true");
+        return;
+    }
+    
+    res.send("didStore returned false");
 });
 
 app.listen(31001);

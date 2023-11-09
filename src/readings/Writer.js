@@ -5,8 +5,19 @@
 /* details perhaps partly based on Express routers */
 
 export class Writer {
-    test = "q-q-q-q";
-    
+    storeReading(raw) {
+        console.log(`cruft : raw:`, raw);
+        
+        let json = JSON.parse(raw);
+        console.log(`cruft : json:`, json);
+        
+        if (json.reading === true) {
+            return true;
+        }
+
+        return false;
+    }
+ 
     run() { }
 }
 
