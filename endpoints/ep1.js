@@ -20,6 +20,11 @@ app.listen(port);
 
 async function fetcher() {
     let response = await fetch(other);
+    
+    if (!response.ok) {
+        return `Could not fetch from ${ other }.`;
+    }
+    
     let result = await response.text();
     return result;
 }
