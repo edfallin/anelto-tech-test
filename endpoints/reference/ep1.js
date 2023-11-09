@@ -11,7 +11,7 @@ let port = 31113;
 
 app.get("/", (req, res) => {
     console.log(`cruft : req.originalUrl:`, req.originalUrl);
-    fetcher().then(text => res.send("reached" + text));
+    fetcher().then(text => res.send("ep1 invoked.  Reached ep2, which returned this: " + text));
 });
 
 app.listen(port);
