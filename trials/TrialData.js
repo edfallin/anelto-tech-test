@@ -9,6 +9,8 @@ import { HourOfReadings } from "../src/storage/HourOfReadings.js";
 
 
 export class TrialData {
+    data;
+
     constructor() {
         let u = new UnifiedStorage();
         
