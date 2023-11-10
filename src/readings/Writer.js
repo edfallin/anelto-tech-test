@@ -8,11 +8,11 @@ export class Writer {
     storeReading(json) {
         console.log(`cruft : json:`, json);
         
-        if (json.reading === true) {
-            return true;
+        if (json.systolic - json.diastolic > 50) {
+            return "Wide";
         }
 
-        return false;
+        return "Narrow";
     }
  
     run() { }

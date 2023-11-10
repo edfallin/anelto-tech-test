@@ -1,12 +1,15 @@
 /**/
 
-/* structure for one reading for one patient; some elements probably arbitrary */
+/* Structure for one reading for one patient; blood pressure chosen as an obvious topic. */
 
 export class Reading {
-    data;
+    patientId;
+    systolic;
+    diastolic;
     
-    /* readings arg has to be an array of key-value arrays, like [ [k,v], [k,v] ]*/
-    constructor(data) {
-        this.data = new Map(data);
+    constructor(patientId, systolic, diastolic) {
+        this.patientId = patientId;
+        this.systolic = systolic;
+        this.diastolic = diastolic;
     }
 }

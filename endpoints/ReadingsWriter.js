@@ -14,15 +14,9 @@ let source = import("../src/readings/Writer.js")
 
 app.post("/add/", (req, res) => {
     console.log(`cruft : req.body:`, req.body);
-    let didStore = service.storeReading(req.body);
+    let outcome = service.storeReading(req.body);
     
-    if (didStore) {
-        res.ok = true;
-        res.send("OK: didStore returned true");
-        return;
-    }
-    
-    res.send("didStore returned false");
+    res.send(`Service reported outcome: ${ outcome }`);
 });
 
 
