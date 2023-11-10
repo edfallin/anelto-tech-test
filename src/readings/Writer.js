@@ -5,10 +5,7 @@
 /* details perhaps partly based on Express routers */
 
 export class Writer {
-    storeReading(raw) {
-        console.log(`cruft : raw:`, raw);
-        
-        let json = JSON.parse(raw);
+    storeReading(json) {
         console.log(`cruft : json:`, json);
         
         if (json.reading === true) {
