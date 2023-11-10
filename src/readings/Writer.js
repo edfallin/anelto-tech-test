@@ -5,6 +5,10 @@
 /* details perhaps partly based on Express routers */
 
 export class Writer {
+    init() {
+        // registers self to pub-sub with HTTP fetch
+    }
+
     storeReading(json) {
         console.log(`cruft : json:`, json);
         
@@ -14,11 +18,9 @@ export class Writer {
 
         return "Narrow";
     }
- 
-    run() { }
+
+    isValidReading(json) {
+    }
+
 }
 
-let writer = new Writer();
-
-/* run() should start receiver, etc., maybe just wire together event handling */
-writer.run();

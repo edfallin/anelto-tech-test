@@ -13,10 +13,9 @@ let source = import("../src/readings/Writer.js")
 
 
 app.post("/add/", (req, res) => {
-    console.log(`cruft : req.body:`, req.body);
     let outcome = service.storeReading(req.body);
-    
-    res.send(`Service reported outcome: ${ outcome }`);
+    res.ok = true;
+    res.send("Added");
 });
 
 

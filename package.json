@@ -7,7 +7,7 @@
     "dev": "nodemon --exec ts-node src/index.ts",
     "test": "node ./node_modules/risei/index.js",
     "ref-trial": "pm2 start node endpoints/reference/ep1.js && pm2 start node endpoints/reference/ep2.js",
-    "trial": "pm2 start node ... && pm2 start node ... && pm2 start node ... && pm2 start node ..."
+    "trial": "pm2 start node endpoints/ReadingsWriter.js && pm2 start node ... && pm2 start node ... && pm2 start node ..."
   },
   "risei": {
     "tests": "**.rt.js"
