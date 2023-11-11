@@ -1,5 +1,7 @@
 /**/
 
+import { Storage } from "../storage/Storage.js";
+
 /* micro to handle all writing (storing) of data (by devices) */
 
 /* details perhaps partly based on Express routers */
