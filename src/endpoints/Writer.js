@@ -1,28 +1,8 @@
 /**/
 
-/* External endpoint for patient data. */
+/* Micro to handle all writing (storing) of data, with external endpoint. */
 
 import express from "express";
-// import { Writer } from "../readings/Writer.js";
-import { Storage } from "../storage/Storage.js";
-
-// let app = express();
-// app.use(express.json());
-
-// let service = new Writer();
-
-// app.post("/add/", (req, res) => {
-//     let outcome = service.storeReading(req.body);
-//     res.ok = true;
-//     res.send("Added");
-// });
-
-// app.listen(31001);
-
-
-/* micro to handle all writing (storing) of data (by devices) */
-
-/* details perhaps partly based on Express routers */
 
 export class Writer {
     #port = 31001;
@@ -31,6 +11,7 @@ export class Writer {
     constructor() {
         this.initHttp();
         this.initExternalListeners();
+        this.wireToPubSub();
     }
 
     initHttp() {
@@ -39,20 +20,32 @@ export class Writer {
     }
 
     initExternalListeners() {
+        this.#app.get("/", (req, res) => {
+            res.ok = true;
+            res.send("Writer is listening.");
+        });
+    
         this.#app.post("/add/", (req, res) => {
             let outcome = this.storeReading(req.body);
             res.ok = true;
-            res.send("Added");
+            res.send(`Added.  ${ outcome }`);
         });
 
-        // registers self to pub-sub with HTTP fetch
+        /* %cruft : more listeners here */
+    }
+    
+    wireToPubSub() {
+        /* %cruft : registers self to pub-sub with HTTP fetch */
     }
 
     run() {
         this.#app.listen(this.#port);
+        console.log(`Writer listening on port ${ this.#port } for calls to /add/.`);
     }
 
     storeReading(json) {
+        /* %cruft : instead of using storage directly, sends to pub-sub */
+    
         console.log(`cruft : json:`, json);
         
         if (json.systolic - json.diastolic > 50) {
@@ -69,3 +62,7 @@ export class Writer {
 
 let writer = new Writer();
 writer.run();
+
+
+/* %cruft : perhaps factor common code here and in Reader to a superclass */
+
