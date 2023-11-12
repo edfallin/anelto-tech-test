@@ -1,44 +1,35 @@
 /**/
 
-import express from "express";
+import AEndpoint from "./AEndpoint.js";
+import Storage from "../storage/Storage.js";
 
 /* Micro to handle all reading of data (by doctors), with external endpoint. */
 
-export class Reader {
-    #port = 31003;
-    #app;
-    
+export class Reader extends AEndpoint {
     constructor() {
-        this.initHttp();
-        this.initExternalListeners();
-        this.wireToPubSub();
+        super();
+        this.port = 31003;
+        this.name = "Reader";
     }
 
-    initHttp() {
-        this.#app = express();
-        this.#app.use(express.json());
+    initExternalListeners() {
+        super.initExternalListeners();
+        this.initGetter();
     }
     
-    initExternalListeners() {
-        this.#app.get("/", (req, res) => {
-            res.ok = true;
-            res.send("Reader is listening.");
+    initGetter() {
+        this.app.get("/patient/{id}/{from}/{to}", (req, res) => {
         });
-        
-        this.#app.get("/patient/{id}/{from}/{to}", (req, res) => {
-        });
-
-        /* %cruft : listeners here */
     }
     
     wireToPubSub() {
-        /* %cruft : registers self to pub-sub with HTTP fetch */
+        /* No operations: not a pub-sub publisher or subscriber. */
     }
     
-    run() {
-        this.#app.listen(this.#port);
-        console.log(`Reader listening on port ${ this.#port } for calls to ... .`);
-    }
+    // run() {
+    //     this.#app.listen(this.#port);
+    //     console.log(`Reader listening on port ${ this.#port } for calls to ... .`);
+    // }
 
     getReadings() { }
 }

@@ -2,45 +2,31 @@
 
 /* Micro to handle all writing (storing) of data, with external endpoint. */
 
-import express from "express";
+import AEndpoint from "./AEndpoint.js";
+import Storage from "../storage/Storage.js";
 
-export class Writer {
-    #port = 31001;
-    #app;
+export class Writer extends AEndpoint {
     
     constructor() {
-        this.initHttp();
-        this.initExternalListeners();
-        this.wireToPubSub();
-    }
-
-    initHttp() {
-        this.#app = express();
-        this.#app.use(express.json());
+        super();
+        this.port = 31001;
+        this.name = "Writer";
     }
 
     initExternalListeners() {
-        this.#app.get("/", (req, res) => {
-            res.ok = true;
-            res.send("Writer is listening.");
-        });
+        super.initExternalListeners();
+        this.initAdder();
+    }
     
-        this.#app.post("/add/", (req, res) => {
+    initAdder() {
+        this.app.post("/add-reading/", (req, res) => {
             let outcome = this.storeReading(req.body);
-            res.ok = true;
-            res.send(`Added.  ${ outcome }`);
+            res.ok = true;  // No new URL, so not 201 created.
         });
-
-        /* %cruft : more listeners here */
     }
     
     wireToPubSub() {
-        /* %cruft : registers self to pub-sub with HTTP fetch */
-    }
-
-    run() {
-        this.#app.listen(this.#port);
-        console.log(`Writer listening on port ${ this.#port } for calls to /add/.`);
+        /* Wires to write to pub-sub only. */
     }
 
     storeReading(json) {
@@ -55,8 +41,8 @@ export class Writer {
         return "Range is narrow";
     }
 
-    isValidReading(json) {
-    }
+    // isValidReading(json) {
+    // }
 
 }
 

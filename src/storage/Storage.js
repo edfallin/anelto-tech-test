@@ -2,7 +2,7 @@
 
 import mongo from "mongodb";
 
-export class Storage {
+export default class Storage {
     store;
     
     constructor() {
