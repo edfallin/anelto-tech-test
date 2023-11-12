@@ -32,7 +32,7 @@ class MessageQueue {
     console.log(`Service registered at ${url}`);
   }
 
-  /* Retaqin an event to announce to all observers.
+  /* Retain an event to announce to all observers.
      NB: No removal mechanism for events. */
   public enqueueMessage(message: string): void {
     this.queue.push(message);
@@ -76,7 +76,6 @@ class MessageQueue {
       }
     });
   }
-
 }
 
 // Instance used by all HTTPS listeners
@@ -105,6 +104,7 @@ app.get("/", (req, res) => {
 /* Call https://localhost:3033/send-message, body = text, to announce to all observers */
 app.post("/send-message", (req: Request, res: Response) => {
   const { message } = req.body;
+  console.log(`cruft : message:`, message);
   
   if (typeof message !== "string" || !message) {
     return res.status(400).send("Message is required and must be a string");

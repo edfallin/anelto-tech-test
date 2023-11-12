@@ -6,11 +6,13 @@ import AEndpoint from "./AEndpoint.js";
 import Storage from "../storage/Storage.js";
 
 export default class Writer extends AEndpoint {
+    pubSubUrl = "http://localhost:3033/send-message";
     
     constructor() {
         super();
         this.port = 31001;
         this.name = "Writer";
+        this.store = new Storage();
     }
 
     initExternalListeners() {
@@ -19,9 +21,16 @@ export default class Writer extends AEndpoint {
     }
     
     initAdder() {
+        /* %cruft, add output to pub-sub here */
         this.app.post("/add-reading/", (req, res) => {
-            let outcome = this.storeReading(req.body);
-            res.ok = true;  // No new URL, so not 201 created.
+            console.log(`cruft : req.body:`, req.body);
+            this.storeReading(req.body)
+                .then(outcome => {
+                    let { ok, status, content } = outcome;
+                    res.ok = ok;
+                    res.status = status;
+                    res.send(content);
+                });
         });
     }
     
@@ -29,19 +38,39 @@ export default class Writer extends AEndpoint {
         /* Wires to write to pub-sub only. */
     }
 
-    storeReading(json) {
-        console.log(`cruft : json:`, json);
+    async storeReading(json) {
+        let result = await this.store.storeReading(json);
         
-        if (json.systolic - json.diastolic > 50) {
-            return "Range is wide";
+        if (!result.acknowledged) {
+            return { 
+                ok: false, status: 500, 
+                content: "Error adding reading.  Reading not added.  Please review system status." 
+            };
         }
-
-        return "Range is narrow";
+        
+        return { ok: true, status: 201, content: "Reading added." };
     }
-
-    /* %cruft : ?cruft */
-    // isValidReading(json) {
-    // }
+    
+    async publishReading(json) {
+        let message = { event: "new-reading", content: json };
+    
+        let post = {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: { 
+                message 
+            }
+        };
+        
+        await fetch(this.pubSubUrl, post);
+    }
+    
+    run() {
+        super.run();
+        this.store.init();
+    }
 
 }
 

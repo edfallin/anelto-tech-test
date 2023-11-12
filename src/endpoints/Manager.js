@@ -51,7 +51,6 @@ export default class Manager extends AEndpoint {
     
     async storePatient(patient) /* verified */ {
         let raw = await this.store.storePatient(patient);
-        console.log(`cruft : raw:`, raw);
         return this.interpretStoreResult(raw);
     }
     
@@ -92,7 +91,7 @@ export default class Manager extends AEndpoint {
         return { ok: true, status: 200, content: "Patient removed." }
     }
     
-    run() {
+    run() /* verified */ {
         super.run();
         this.store.init();
     }
