@@ -36,3 +36,7 @@ console.log(`cruft : storeReading, didAdd:`, didAdd);
 
 storedReadings = await readings.findOne({ patientId: "B9275348" });
 console.log(`cruft : after, storedReadings:`, storedReadings);
+
+storedReadings = await store.getPatientReadings("B9275348", "from", "to");
+console.log(`cruft : called, storedReadings:`, storedReadings);
+

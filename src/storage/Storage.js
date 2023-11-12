@@ -39,21 +39,19 @@ export default class Storage {
      }
     
     async storeReading(reading) {
-        let patient = await this.patients.findOne({ patientId: reading.patientId });
-        let uid = patient._id;
-        let readings = this.store.collection(`readings-patient-${ uid }`);
-
+        let readings = await this.#getReadingCollectionFor(reading.patientId);
         let result = await readings.insertOne(reading);
         return result;
      }
     
     async getPatientReadings(patientId, from, to) { 
-        let patient = await this.patients.findOne({ patientId });
+        let readings = await this.#getReadingCollectionFor(patientId);
+        return await readings.find({ });
     }
     
     async #getReadingCollectionFor(patientId) {
         let patient = await this.patients.findOne({ patientId });
-        let uid = patient._id;  // ObjectId() not needed for naming use.
+        let uid = patient._id;
         let collection = this.store.collection(`readings-${ uid }`);
         return collection;
     }
