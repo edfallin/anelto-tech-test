@@ -4,6 +4,7 @@ import { MongoClient } from "mongodb";
 
 export default class Storage {
     store;
+    patients;
     
     constructor() {
         /* No operations. */
@@ -13,14 +14,37 @@ export default class Storage {
         let client = await new MongoClient(`mongodb://127.0.0.1:27017`);
         await client.connect();
         this.store = client.db("local");
+        this.patients = this.store.collection("patients");
     }
     
-    storePatient(patient) { }
+    async storePatient(patient) {
+        let existing = await this.patients.findOne({ patientId: patient.patientId });
+        
+        if (existing) {
+            return true;
+        }
+        
+        let result = await patients.insertOne(patient);
+        return result;
+    }
     
-    unstorePatient() { }
+    async unstorePatient(patientId) {
+        let existing = await this.patients.findOne({ patientId: patientId });
+        
+        if (!existing) {
+            return false;
+        }
+        
+        let result = await this.patients.remove(
+     }
     
-    storeReading(reading) { }
+    async storeReading(reading) {
+        let uuid = await this.store.collection("patients")
+        let readings = this.store.collection(`readings-patient-${ reading.patientId }`);
+        let result = await readings.insertOne(reading);
+        return result;
+     }
     
-    getPatientReadings() { }
+    async getPatientReadings() { }
     
 }

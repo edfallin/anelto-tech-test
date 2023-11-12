@@ -5,7 +5,7 @@ import Storage from "./storage/Storage.js";
 
 // new store instance
 
-let store = new Storage();
+let store = await new Storage();
 await store.init();
 let db = store.store;
 
@@ -13,7 +13,7 @@ let db = store.store;
 // data trials
 
 let patient = { firstName: "John", lastName: "Johannson", patientId: "B9275348" };
-let didAdd = await store.storePatient();
+let didAdd = await store.storePatient(patient);
 console.log(`cruft : storePatient, didAdd:`, didAdd);
 
 let patients = db.collection("patients");
