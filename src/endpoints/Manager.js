@@ -46,14 +46,17 @@ export default class Manager extends AEndpoint {
         return this.interpretStoreResult(raw);
     }
     
-    interpretStoreResult(raw) {
-        if (raw.acknowledged === false) {
-            if (already) {
+    interpretStoreResult(raw) /* passed */ {
+        if (!raw.acknowledged) {
+            if (raw.already) {
                 return { ok: true, status: 200, content: raw.message };
+            }
+            else {
+                return { ok: false, status: 400, content: "Bad request data.  Please review your input." };
             }
         }
         
-        return { ok: true, status: 200, content: "winning!" };
+        return { ok: true, status: 201, content: "Patient added." };
     }
     
     unstorePatient(id) {
