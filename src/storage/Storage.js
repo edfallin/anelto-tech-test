@@ -1,18 +1,18 @@
 /**/
 
-import mongo from "mongodb";
+import MongoClient from "mongodb";
 
 export default class Storage {
     store;
     
     constructor() {
-        this.construct()
-            .then(client => store = client.db("local"));
+        /* No operations. */
     }
     
-    async construct() {
-        let client = await new mongo(`mongodb://127.0.0.1:27017`, { });
+    async init() {
+        let client = await new MongoClient(`mongodb://127.0.0.1:27017`, { useUnifiedTopology: true });
         await client.connect();
+        this.store = client.db("local");
     }
     
     storePatient(patient) { }
