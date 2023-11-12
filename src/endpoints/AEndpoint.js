@@ -9,18 +9,18 @@ export default class AEndpoint {
     app;
     name;
     
-    constructor() {
+    constructor() /* verified */ {
         this.initHttp();
         this.initExternalListeners();
         this.wireToPubSub();
     }
     
-    initHttp() {
+    initHttp() /* verified */ {
         this.app = express();
         this.app.use(express.json());
     }
     
-    initExternalListeners() {
+    initExternalListeners() /* verified */ {
         this.app.get("/identify", (req, res) => {
             res.ok = true;
             res.send(`${ this.name } is listening.`);
@@ -31,7 +31,7 @@ export default class AEndpoint {
         throw new Error("wireToPubSub() must be implemented in subclass.");
     }
     
-    run() {
+    run() /* verified */ {
         this.app.listen(this.port);
         console.log(`${ this.name } listening on port ${ this.port }.`);
     }

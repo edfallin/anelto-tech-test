@@ -6,20 +6,20 @@ import Storage from "../storage/Storage.js";
 export default class Manager extends AEndpoint {
     store;
     
-    constructor() {
+    constructor() /* verified */ {
         super();
         this.port = 31005;
         this.name = "Manager";
         this.store = new Storage();
     }
     
-    initExternalListeners() {
+    initExternalListeners() /* verified */ {
         super.initExternalListeners();
         this.initAdder();
         this.initRemover();
     }
     
-    initAdder() {
+    initAdder() /* verified */ {
         this.app.post("/add-patient/", (req, res) => {
             this.storePatient(req.body)
                 .then(outcome => {
@@ -31,7 +31,7 @@ export default class Manager extends AEndpoint {
         });
     }
     
-    initRemover() {
+    initRemover() /* verified */ {
         this.app.delete("/remove-patient/:patientId", (req, res) => {
             let patientId = req.params.patientId;
             console.log(`cruft : patientId:`, patientId);
@@ -45,11 +45,11 @@ export default class Manager extends AEndpoint {
         });
     }
     
-    wireToPubSub() {
+    wireToPubSub() /* ok */ {
         /* No operations: not a pub-sub publisher or subscriber. */
     }
     
-    async storePatient(patient) {
+    async storePatient(patient) /* verified */ {
         let raw = await this.store.storePatient(patient);
         console.log(`cruft : raw:`, raw);
         return this.interpretStoreResult(raw);
@@ -71,7 +71,7 @@ export default class Manager extends AEndpoint {
         return { ok: true, status: 201, content: "Patient added." };
     }
     
-    async unstorePatient(id) {
+    async unstorePatient(id) /* verified */ {
         let raw = await this.store.unstorePatient(id);
         return this.interpretUnstoreResult(raw);
     }
