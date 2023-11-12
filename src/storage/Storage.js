@@ -1,6 +1,6 @@
 /**/
 
-import MongoClient from "mongodb";
+import { MongoClient } from "mongodb";
 
 export default class Storage {
     store;
@@ -10,7 +10,7 @@ export default class Storage {
     }
     
     async init() {
-        let client = await new MongoClient(`mongodb://127.0.0.1:27017`, { useUnifiedTopology: true });
+        let client = await new MongoClient(`mongodb://127.0.0.1:27017`);
         await client.connect();
         this.store = client.db("local");
     }
