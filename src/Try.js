@@ -7,7 +7,7 @@ import Storage from "./storage/Storage.js";
 
 let store = await new Storage();
 await store.init();
-let db = store.store;
+let db = store.db;
 
 
 // region Basic operations: Add a patient, add a reading, get a reading, drop a patient.
@@ -24,24 +24,24 @@ console.log(`cruft : storedPatient:`, storedPatient);
 
 // Calculating readings collection for this patient.
 let uid = storedPatient._id;
-let name = `readings-patient-${ uid }`;
+let name = `readings-${ uid }`;
 console.log(`cruft : calculated name:`, name);
 
 let readings = db.collection(name);
 
 // Adding and looking at readings.
-let storedReadings = await readings.findOne({ patientId: "B9275348" });
+let storedReadings = await readings.find({ }).toArray();
 console.log(`cruft : before, storedReadings:`, storedReadings);
 
 let reading = { patientId: "B9275348", timestamp: new Date(), systolic: 130, diastolic: 90 };
 result = await store.storeReading(reading);
 console.log(`cruft : storeReading() result:`, result);
 
-storedReadings = await readings.findOne({ patientId: "B9275348" });
+storedReadings = await readings.find({ }).toArray();
 console.log(`cruft : after, storedReadings:`, storedReadings);
 
-storedReadings = await store.getPatientReadings("B9275348", new Date("11/01/2023"), new Date("11/30/2023"));
-console.log(`cruft : called, storedReadings:`, storedReadings);
+let chosen = await store.getPatientReadings("B9275348", new Date("11/01/2023"), new Date("11/30/2023"));
+console.log(`cruft : called, storedReadings():`, chosen);
 
 // Removing patient and verifying collection states.
 result = await store.unstorePatient("B9275348");
@@ -68,7 +68,7 @@ result = await store.storePatient(patient);
 
 // Calculating readings collection for this patient.
 uid = result._id;
-name = `readings-patient-${ uid }`;
+name = `readings-${ uid }`;
 readings = db.collection(name);
 
 // Adding and looking at all readings.
@@ -89,12 +89,14 @@ storedReadings = await readings.find({ }).toArray();
 console.log(`cruft : all jR storedReadings:`, storedReadings);
 
 // Getting targeted readings.
-let chosen = await store.getPatientReadings("C4062091", new Date("11/03/2023"), new Date("11/06/2023"));
+chosen = await store.getPatientReadings("C4062091", new Date("11/03/2023"), new Date("11/06/2023"));
 console.log(`cruft : chosen, 11/03 to 11/06:`, chosen);
 
 chosen = await store.getPatientReadings("C4062091", new Date("11/01/2023"), new Date("11/04/2023"));
 console.log(`cruft : chosen, 11/01 to 11/04:`, chosen);
 
+// Dropping patient to avoid duplicate-date insanity.
+result = await store.unstorePatient("C4062091");
 
 
 // endregion Complex operations: Add a patient, add several readings, get just some of those readings.

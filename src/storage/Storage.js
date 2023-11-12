@@ -3,18 +3,18 @@
 import { MongoClient } from "mongodb";
 
 export default class Storage {
-    store;
+    db;
     patients;
     
-    constructor() {
+    constructor() /* ok */ {
         /* No operations. */
     }
     
     async init() /* ok */ {
         let client = await new MongoClient(`mongodb://127.0.0.1:27017`);
         await client.connect();
-        this.store = client.db("local");
-        this.patients = this.store.collection("patients");
+        this.db = client.db("local");
+        this.patients = this.db.collection("patients");
     }
     
     async storePatient(patient) /* verified */ {
@@ -52,12 +52,12 @@ export default class Storage {
         return result;
      }
     
-    async getPatientReadings(patientId, from, to) { 
+    async getPatientReadings(patientId, from, to) /* verified */ { 
         let collection = await this.#getReadingCollectionFor(patientId);
         let result = await collection.find(
             { 
-                patientId: patientId,
                 $and: [
+                    { patientId: patientId },
                     { timestamp: { $gte: from } },
                     { timestamp: { $lte: to } }
                   ] 
@@ -68,7 +68,7 @@ export default class Storage {
     async #getReadingCollectionFor(patientId) /* verified */ {
         let patient = await this.patients.findOne({ patientId });
         let uid = patient._id;
-        let collection = this.store.collection(`readings-${ uid }`);
+        let collection = this.db.collection(`readings-${ uid }`);
         return collection;
     }
     
