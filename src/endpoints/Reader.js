@@ -24,6 +24,9 @@ export class Reader {
             res.ok = true;
             res.send("Reader is listening.");
         });
+        
+        this.#app.get("/patient/{id}/{from}/{to}", (req, res) => {
+        });
 
         /* %cruft : listeners here */
     }
