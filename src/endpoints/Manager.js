@@ -67,9 +67,10 @@ export default class Manager extends AEndpoint {
     
     unstorePatient(id) {
         let raw = this.store.unstorePatient(patient);
+        return this.interpretUnstoreResult(raw);
     }
     
-    interpretUnstoreResult(raw) {
+    interpretUnstoreResult(raw) /* passed */ {
         if (!raw.acknowledged) {
             if (raw.already) {
                 return { ok: true, status: 200, content: raw.message };
