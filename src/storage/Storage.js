@@ -22,7 +22,12 @@ export default class Storage {
         let existing = await this.patients.findOne({ patientId });
         
         if (existing) {
-            return `Patient with ID ${ patientId } already exists.  Not adding.`;
+            let already = { 
+                acknowledged: false,
+                already: true,
+                message: `Patient with ID ${ patientId } already exists.  Not re-added.` 
+            };
+            return already;
         }
         
         let result = await this.patients.insertOne(patient);
@@ -33,7 +38,7 @@ export default class Storage {
         let existing = await this.patients.findOne({ patientId });
         
         if (!existing) {
-            return `Patient with ID ${ patientId } does not exist.  Not deleting.`;
+            return `Patient with ID ${ patientId } does not exist.  Not re-deleted.`;
         }
         
         /* Patient readings are dropped as well as patient. */

@@ -5,11 +5,14 @@ import Storage from "../storage/Storage.js";
 
 /* %cruft : adding and subtracting patients */
 
-export class Manager extends AEndpoint {
+export default class Manager extends AEndpoint {
+    store;
+    
     constructor() {
         super();
         this.port = 31005;
         this.name = "Manager";
+        this.store = new Storage();
     }
     
     initExternalListeners() {
@@ -21,11 +24,11 @@ export class Manager extends AEndpoint {
     initAdder() {
         this.app.post("/add-patient/", (req, res) => {
             let outcome = this.storePatient(req.body);
-            res.ok = true;
-            res.status = 201;  // Created.
-            res.send();
+            res.ok = outcome.ok;
+            res.status = outcome.status;
+            res.send(outcome.content);
         });
-     }
+    }
     
     initRemover() {
         this.app.delete("/remove-patient/", (req, res) => {
@@ -38,12 +41,23 @@ export class Manager extends AEndpoint {
         /* No operations: not a pub-sub publisher or subscriber. */
     }
     
-    storePatient(json) {
+    storePatient(patient) {
+        let raw = this.store.storePatient(patient);
+        return this.interpretStoreResult(raw);
+    }
+    
+    interpretStoreResult(raw) {
+        if (raw.acknowledged === false) {
+            if (already) {
+                return { ok: true, status: 200, content: raw.message };
+            }
+        }
+        
+        return { ok: true, status: 200, content: "winning!" };
     }
     
     unstorePatient(id) {
+        this.store.unstorePatient(patient);
     }
 }
 
-let manager = new Manager();
-manager.run();

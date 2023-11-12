@@ -5,7 +5,7 @@ import Storage from "../storage/Storage.js";
 
 /* Micro to handle all reading of data (by doctors), with external endpoint. */
 
-export class Reader extends AEndpoint {
+export default class Reader extends AEndpoint {
     constructor() {
         super();
         this.port = 31003;
@@ -34,5 +34,3 @@ export class Reader extends AEndpoint {
     getReadings() { }
 }
 
-let reader = new Reader();
-reader.run();

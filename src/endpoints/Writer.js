@@ -5,7 +5,7 @@
 import AEndpoint from "./AEndpoint.js";
 import Storage from "../storage/Storage.js";
 
-export class Writer extends AEndpoint {
+export default class Writer extends AEndpoint {
     
     constructor() {
         super();
@@ -39,14 +39,9 @@ export class Writer extends AEndpoint {
         return "Range is narrow";
     }
 
+    /* %cruft : ?cruft */
     // isValidReading(json) {
     // }
 
 }
-
-let writer = new Writer();
-writer.run();
-
-
-/* %cruft : perhaps factor common code here and in Reader to a superclass */
 
