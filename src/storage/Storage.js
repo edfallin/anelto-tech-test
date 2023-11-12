@@ -29,22 +29,33 @@ export default class Storage {
     }
     
     async unstorePatient(patientId) {
-        let existing = await this.patients.findOne({ patientId: patientId });
+        let existing = await this.patients.findOne({ patientId });
         
         if (!existing) {
             return false;
         }
         
-        let result = await this.patients.remove(
+        let result = await this.patients.deleteOne({ patientId });
      }
     
     async storeReading(reading) {
-        let uuid = await this.store.collection("patients")
-        let readings = this.store.collection(`readings-patient-${ reading.patientId }`);
+        let patient = await this.patients.findOne({ patientId: reading.patientId });
+        let uid = patient._id;
+        let readings = this.store.collection(`readings-patient-${ uid }`);
+
         let result = await readings.insertOne(reading);
         return result;
      }
     
-    async getPatientReadings() { }
+    async getPatientReadings(patientId, from, to) { 
+        let patient = await this.patients.findOne({ patientId });
+    }
+    
+    async #getReadingCollectionFor(patientId) {
+        let patient = await this.patients.findOne({ patientId });
+        let uid = patient._id;  // ObjectId() not needed for naming use.
+        let collection = this.store.collection(`readings-${ uid }`);
+        return collection;
+    }
     
 }

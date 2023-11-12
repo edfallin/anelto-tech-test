@@ -17,10 +17,16 @@ let didAdd = await store.storePatient(patient);
 console.log(`cruft : storePatient, didAdd:`, didAdd);
 
 let patients = db.collection("patients");
+
 let storedPatient = await patients.findOne({ patientId: "B9275348" });
 console.log(`cruft : storedPatient:`, storedPatient);
 
-let readings = db.collection("patient-readings");
+let uid = storedPatient._id;
+let name = `readings-patient-${ uid }`;
+console.log(`cruft : calculated name:`, name);
+
+let readings = db.collection(name);
+
 let storedReadings = await readings.findOne({ patientId: "B9275348" });
 console.log(`cruft : before, storedReadings:`, storedReadings);
 
