@@ -14,4 +14,13 @@ export default class Storage {
         let client = await new mongo(`mongodb://127.0.0.1:27017`, { });
         await client.connect();
     }
+    
+    storePatient(patient) { }
+    
+    unstorePatient() { }
+    
+    storeReading(reading) { }
+    
+    getPatientReadings() { }
+    
 }

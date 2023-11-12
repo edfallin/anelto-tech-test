@@ -30,8 +30,6 @@ export class Writer extends AEndpoint {
     }
 
     storeReading(json) {
-        /* %cruft : instead of using storage directly, sends to pub-sub */
-    
         console.log(`cruft : json:`, json);
         
         if (json.systolic - json.diastolic > 50) {
