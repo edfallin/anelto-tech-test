@@ -18,13 +18,14 @@ export default class Storage {
     }
     
     async storePatient(patient) {
-        let existing = await this.patients.findOne({ patientId: patient.patientId });
+        let patientId = patient.patientId;
+        let existing = await this.patients.findOne({ patientId });
         
         if (existing) {
-            return true;
+            return `Patient with ID ${ patientId } already exists.  Not adding.`;
         }
         
-        let result = await patients.insertOne(patient);
+        let result = await this.patients.insertOne(patient);
         return result;
     }
     
@@ -32,10 +33,17 @@ export default class Storage {
         let existing = await this.patients.findOne({ patientId });
         
         if (!existing) {
-            return false;
+            return `Patient with ID ${ patientId } does not exist.  Not deleting.`;
         }
         
+        /* Patient readings are dropped as well as patient. */
+        
+        // Must come first because .patients is searched.
+        let readings = await this.#getReadingCollectionFor(patientId);
+        readings.drop();
+        
         let result = await this.patients.deleteOne({ patientId });
+        return result;
      }
     
     async storeReading(reading) {
@@ -45,8 +53,9 @@ export default class Storage {
      }
     
     async getPatientReadings(patientId, from, to) { 
-        let readings = await this.#getReadingCollectionFor(patientId);
-        return await readings.find({ });
+        let collection = await this.#getReadingCollectionFor(patientId);
+        let result = await collection.find({ });
+        return result;
     }
     
     async #getReadingCollectionFor(patientId) {

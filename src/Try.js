@@ -13,8 +13,8 @@ let db = store.store;
 // data trials
 
 let patient = { firstName: "John", lastName: "Johannson", patientId: "B9275348" };
-let didAdd = await store.storePatient(patient);
-console.log(`cruft : storePatient, didAdd:`, didAdd);
+let result = await store.storePatient(patient);
+console.log(`cruft : storePatient() result:`, result);
 
 let patients = db.collection("patients");
 
@@ -31,12 +31,18 @@ let storedReadings = await readings.findOne({ patientId: "B9275348" });
 console.log(`cruft : before, storedReadings:`, storedReadings);
 
 let reading = { patientId: "B9275348", systolic: 130, diastolic: 90 };
-didAdd = await store.storeReading(reading);
-console.log(`cruft : storeReading, didAdd:`, didAdd);
+result = await store.storeReading(reading);
+console.log(`cruft : storeReading() result:`, result);
 
 storedReadings = await readings.findOne({ patientId: "B9275348" });
 console.log(`cruft : after, storedReadings:`, storedReadings);
 
 storedReadings = await store.getPatientReadings("B9275348", "from", "to");
 console.log(`cruft : called, storedReadings:`, storedReadings);
+
+result = await store.unstorePatient("B9275348");
+console.log(`cruft : unstorePatient() result:`, result);
+
+// let storedPatients = await patients.find( { } );
+// console.log(`cruft : storedPatients:`, storedPatients);
 
