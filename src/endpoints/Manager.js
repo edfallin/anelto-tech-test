@@ -23,17 +23,20 @@ export default class Manager extends AEndpoint {
     
     initAdder() {
         this.app.post("/add-patient/", (req, res) => {
-            let outcome = this.storePatient(req.body);
-            res.ok = outcome.ok;
-            res.status = outcome.status;
-            res.send(outcome.content);
+            let { ok, status, content } = this.storePatient(req.body);
+            res.ok = ok;
+            res.status = status;
+            
+            res.send(content);
         });
     }
     
     initRemover() {
         this.app.delete("/remove-patient/", (req, res) => {
-            res.ok = true;
-            res.send();
+            let { ok, status, content } = this.unstorePatient(req.body);
+            res.ok = ok;
+            res.status = status;
+            res.send(content);
         });
     }
     
@@ -52,7 +55,10 @@ export default class Manager extends AEndpoint {
                 return { ok: true, status: 200, content: raw.message };
             }
             else {
-                return { ok: false, status: 400, content: "Bad request data.  Please review your input." };
+                return { 
+                    ok: false, status: 400, 
+                    content: "Bad request data.  Patient not added.  Please review your input." 
+                };
             }
         }
         
@@ -60,7 +66,23 @@ export default class Manager extends AEndpoint {
     }
     
     unstorePatient(id) {
-        this.store.unstorePatient(patient);
+        let raw = this.store.unstorePatient(patient);
+    }
+    
+    interpretUnstoreResult(raw) {
+        if (!raw.acknowledged) {
+            if (raw.already) {
+                return { ok: true, status: 200, content: raw.message };
+            }
+            else {
+                return { 
+                    ok: false, status: 400, 
+                    content: "Bad request data.  Patient not removed.  Please review your input." 
+                };
+            }
+        }
+        
+        return { ok: true, status: 200, content: "Patient removed." }
     }
 }
 
