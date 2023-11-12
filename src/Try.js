@@ -40,7 +40,7 @@ console.log(`cruft : storeReading() result:`, result);
 storedReadings = await readings.findOne({ patientId: "B9275348" });
 console.log(`cruft : after, storedReadings:`, storedReadings);
 
-storedReadings = await readings.find({ }).toArray(); // store.getPatientReadings("B9275348", "from", "to");
+storedReadings = await store.getPatientReadings("B9275348", new Date("11/01/2023"), new Date("11/30/2023"));
 console.log(`cruft : called, storedReadings:`, storedReadings);
 
 // Removing patient and verifying collection states.
@@ -94,6 +94,7 @@ console.log(`cruft : chosen, 11/03 to 11/06:`, chosen);
 
 chosen = await store.getPatientReadings("C4062091", new Date("11/01/2023"), new Date("11/04/2023"));
 console.log(`cruft : chosen, 11/01 to 11/04:`, chosen);
+
 
 
 // endregion Complex operations: Add a patient, add several readings, get just some of those readings.

@@ -55,16 +55,17 @@ export default class Storage {
     async getPatientReadings(patientId, from, to) { 
         let collection = await this.#getReadingCollectionFor(patientId);
         let result = await collection.find(
-            { $and: [
-                { patientId },
-                { timestamp: { $gte: from } },
-                { timestamp: { $lte: to } }
-              ] 
+            { 
+                patientId: patientId,
+                $and: [
+                    { timestamp: { $gte: from } },
+                    { timestamp: { $lte: to } }
+                  ] 
             } );
         return result.toArray();
     }
     
-    async #getReadingCollectionFor(patientId) {
+    async #getReadingCollectionFor(patientId) /* verified */ {
         let patient = await this.patients.findOne({ patientId });
         let uid = patient._id;
         let collection = this.store.collection(`readings-${ uid }`);
