@@ -21,6 +21,7 @@ export default class Manager extends AEndpoint {
     
     initAdder() {
         this.app.post("/add-patient/", (req, res) => {
+            console.log(`cruft : req:`, req);
             console.log(`cruft : req.body:`, req.body);
             this.storePatient(req.body)
                 .then(outcome => {
