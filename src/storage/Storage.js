@@ -10,14 +10,14 @@ export default class Storage {
         /* No operations. */
     }
     
-    async init() {
+    async init() /* ok */ {
         let client = await new MongoClient(`mongodb://127.0.0.1:27017`);
         await client.connect();
         this.store = client.db("local");
         this.patients = this.store.collection("patients");
     }
     
-    async storePatient(patient) {
+    async storePatient(patient) /* verified */ {
         let patientId = patient.patientId;
         let existing = await this.patients.findOne({ patientId });
         
@@ -29,7 +29,7 @@ export default class Storage {
         return result;
     }
     
-    async unstorePatient(patientId) {
+    async unstorePatient(patientId) /* verified */ {
         let existing = await this.patients.findOne({ patientId });
         
         if (!existing) {
@@ -46,7 +46,7 @@ export default class Storage {
         return result;
      }
     
-    async storeReading(reading) {
+    async storeReading(reading) /* verified */ {
         let readings = await this.#getReadingCollectionFor(reading.patientId);
         let result = await readings.insertOne(reading);
         return result;
@@ -54,7 +54,13 @@ export default class Storage {
     
     async getPatientReadings(patientId, from, to) { 
         let collection = await this.#getReadingCollectionFor(patientId);
-        let result = await collection.find({ });
+        let result = await collection.find(
+            { $and: [
+                { patientId },
+                { timestamp: { $gte: from } },
+                { timestamp: { $lte: to } }
+              ] 
+            } );
         return result.toArray();
     }
     
