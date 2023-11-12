@@ -32,7 +32,6 @@ export default class AEndpoint {
     }
     
     run() {
-        console.log(`cruft : run()`);
         this.app.listen(this.port);
         console.log(`${ this.name } listening on port ${ this.port }.`);
     }
