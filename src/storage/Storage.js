@@ -55,7 +55,7 @@ export default class Storage {
     async getPatientReadings(patientId, from, to) { 
         let collection = await this.#getReadingCollectionFor(patientId);
         let result = await collection.find({ });
-        return result;
+        return result.toArray();
     }
     
     async #getReadingCollectionFor(patientId) {
