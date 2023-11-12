@@ -21,8 +21,6 @@ export default class Manager extends AEndpoint {
     
     initAdder() {
         this.app.post("/add-patient/", (req, res) => {
-            console.log(`cruft : req:`, req);
-            console.log(`cruft : req.body:`, req.body);
             this.storePatient(req.body)
                 .then(outcome => {
                     let { ok, status, content } = outcome;
@@ -34,8 +32,10 @@ export default class Manager extends AEndpoint {
     }
     
     initRemover() {
-        this.app.delete("/remove-patient/", (req, res) => {
-             this.unstorePatient(req.body)
+        this.app.delete("/remove-patient/:patientId", (req, res) => {
+            let patientId = req.params.patientId;
+            console.log(`cruft : patientId:`, patientId);
+            this.unstorePatient(patientId)
                 .then(outcome => {
                     let { ok, status, content } = outcome;
                     res.ok = ok;
@@ -72,7 +72,7 @@ export default class Manager extends AEndpoint {
     }
     
     async unstorePatient(id) {
-        let raw = await this.store.unstorePatient(patient);
+        let raw = await this.store.unstorePatient(id);
         return this.interpretUnstoreResult(raw);
     }
     
