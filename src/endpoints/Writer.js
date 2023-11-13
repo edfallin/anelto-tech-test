@@ -38,8 +38,8 @@ export default class Writer extends AEndpoint {
         });
     }
     
-    wireToPubSub() {
-        /* Wires to write to pub-sub only. */
+    async wireToPubSub() {
+        /* No wiring needed: Pub-sub URL called from this microservice instead. */
     }
 
     async storeReading(json) {

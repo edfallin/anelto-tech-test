@@ -32,7 +32,7 @@ export default class Reader extends AEndpoint {
         });
     }
     
-    wireToPubSub() /* ok */ {
+    async wireToPubSub() /* ok */ {
         /* No operations: not a pub-sub publisher or subscriber. */
     }
     

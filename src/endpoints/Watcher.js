@@ -21,27 +21,26 @@ export default class Watcher extends AEndpoint {
     }
 
     initWiredAdder() {
-    //     /* Responds to events sent by pub-sub.  */
-    //
-    //     this.app.post("/add-current", (req, res) => {
-    //         let body = req.body;
-    //         this.maybeAddToCurrent(body.message);
-    //        
-    //         res.ok = true;
-    //         res.status = 200;
-    //         res.send();
-    //     });
+        /* Responds to events sent by pub-sub.  */
+        this.app.post("/add-current", (req, res) => {
+            let body = req.body;
+            this.maybeAddToCurrent(body.message);
+
+            res.ok = true;
+            res.status = 200;
+            res.send();
+        });
     }
 
     initGetter() {
-    //     this.app.get("/get-current/:id", (req, res) => {
-    //         let id = req.params.id;
-    //         let content = this.getCurrent(this.current, id);
-    //        
-    //         res.ok = ok;
-    //         res.status = status
-    //         res.send(content)
-    //     });
+        this.app.get("/get-current/:id", (req, res) => {
+            let id = req.params.id;
+            let content = this.getCurrent(this.current, id);
+
+            res.ok = ok;
+            res.status = status
+            res.send(content)
+        });
     }
 
     async wireToPubSub() {
@@ -57,8 +56,6 @@ export default class Watcher extends AEndpoint {
         );
     }
     
-    
-
     maybeAddToCurrent(message) {
         let event = JSON.parse(message);
 
@@ -98,6 +95,8 @@ export default class Watcher extends AEndpoint {
     }
 
     run() {
+        /* Among other things, wires to pub-sub 
+           with call to wirer in superclass. */
         super.run();
     }
 }
