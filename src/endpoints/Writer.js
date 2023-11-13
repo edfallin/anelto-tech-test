@@ -7,12 +7,14 @@ import Storage from "../storage/Storage.js";
 
 export default class Writer extends AEndpoint {
     pubSubUrl = "http://localhost:3033/send-message";
+    doSkipPubSub = false;
     
-    constructor() {
+    constructor(skip = false) {
         super();
         this.port = 31003;
         this.name = "Writer";
         this.store = new Storage();
+        this.doSkipPubSub = skip;
     }
 
     initExternalListeners() {
@@ -33,6 +35,12 @@ export default class Writer extends AEndpoint {
                 })
                 .then(() => {
                     delete reading._id;
+                    
+                    // For some trial / test conditions.
+                    if (this.doSkipPubSub) {
+                        return;
+                    }
+                    
                     this.publishReading(reading);
                 });
         });

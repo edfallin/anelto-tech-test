@@ -26,7 +26,7 @@ export default class AEndpoint {
         });
     }
     
-    async wireToPubSub() {
+    async wireToPubSub() /* verified */ {
         throw new Error("wireToPubSub() must be implemented in subclass.");
     }
     
