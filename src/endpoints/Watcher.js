@@ -70,17 +70,17 @@ export default class Watcher extends AEndpoint {
     }
 
     getCurrent(id) {
-    //     // All patients' readings are stored together.
-    //     let current = this.current
-    //         .filter(x => x.patientId === id);
-    //
-    //     // Copying to avoid post-removal fails.
-    //     let output = [ ...current ];
-    //    
-    //     // Now stale, so dumped.
-    //     this.dropFrom(this.current, output);
-    //
-    //     return output;
+        // All patients' readings are stored together.
+        let current = this.current
+            .filter(x => x.patientId === id);
+
+        // Copying to avoid post-removal fails.
+        let output = [ ...current ];
+
+        // Now stale, so dumped.
+        this.dropFrom(this.current, output);
+
+        return output;
     }
 
     dropFrom(current, readings) {
