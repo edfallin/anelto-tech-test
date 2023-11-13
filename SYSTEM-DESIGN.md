@@ -110,7 +110,7 @@ I have had to leave off development while many things are incomplete or even sti
 Namely:
 
 1. When anything goes wrong, the affected component crashes.&nbsp;  (Or it could be more than one!).&nbsp;  Alas, getting to `try`-`catch` was always on the horizon.
-1. Retrieval by range doesn't work from HTTP (although it does from the Storage class itself, for instance in `Try.js`).
+1. Retrieval by range doesn't work from HTTP (although it does from the `Storage` class itself, for instance in `Try.js`).
 1. When last checked, the messages emitted by `Writer` were not parseable by the pub-sub emulator.&nbsp;  This means all of the following:
 
     a. That `Writer` crashes.
@@ -123,7 +123,7 @@ Namely:
     > 
     > In any case, it may be working now since I made untested late-breaking changes.
     > 
-    > If it's not, then a flag I added to `Writer`'s constructor makes it possible to turn off pub-sub when adding data for other trying-out.
+    > If it's not, then a flag I added to `Writer`'s constructor makes it possible to turn off pub-sub when adding data for other trying-out, for instance in `Try.js`.
 
 
 ## So you want to run the project
@@ -146,7 +146,7 @@ npm install
 
 3. Install `MongoDb` if it isn't installed already.&nbsp;  This is a many-step process.&nbsp;  Mongo's [own guide](https://www.mongodb.com/docs/manual/administration/install-community/) is best for this.&nbsp;  (That link is for the MacOS version, though of course there are other pages for other OSes.)
 
-> The MongoDb settings in the code assume the defaults, such as port `27107`.
+> The MongoDb settings in the code assume the defaults, such as port `27017`.
 
 4. Start MongoDb one of the usual ways if it's not already running, as laid out on its installation website.
 
@@ -164,13 +164,13 @@ npm test
 
 7. Not everything could be unit-tested given all the situational constraints, so there are also some try-it-out pieces of code.&nbsp;  To see how the usage of MongoDb works, you can find and run the `Try.js` script in the `trials` folder.
 
-8. To go for the gold and try actually running everything, you need to take two steps and then a deep breath:
+8. To go for the gold and try actually running everything, you need to take two steps and then a deep breath before doing these:
 
 ```bash
 npm run dev
 ```
 
-then
+Then
 
 ```bash
 npm run trial-start
@@ -178,7 +178,7 @@ npm run trial-start
 
 This script BTW is the `StartEdgeEndpoints.sh` BASH script found in `src/run-scripts`.&nbsp;  It runs the other `Start___` scripts in the same folder.
 
-At the bottom of its output, after all the `pm2` status screens, this start script tells you how to make the various calls needed.  Here is the same info for convenience:
+At the bottom of its output, after all the `pm2` status screens, this start script tells you how to make the various calls needed.&nbsp;  Here is the same info for convenience:
 
 ```
 How to use:
@@ -199,20 +199,24 @@ How to use:
 
 Of course, the properties in those example objects have to have values, similar to those in the `Try.js` script or, for instance, like this for a patient:
 
-```json
+```javascript
     { patientId: "Z2936584", firstName: "Zachary", lastName: "Taylor" }
 ```
 
 
 9. After trying things out and seeing what if anything works, you would exit from both running systems.
-  a. You can Ctrl+C out of the `nodemon` script (`dev`).
-  a. But you should run the following to stop `pm2` and all the processes.
+
+    a. You can Ctrl+C out of the `nodemon` script (`dev`).
+
+    b. But you should run the following to stop `pm2` and all the processes.
 
 ```bash
 npm run trial-stop
 ```
 
 > **Warning!**:&nbsp;  The preceding script stops ___all___ processes running via `pm2` and then shuts down `pm2` itself.&nbsp;  If that's not what you want, stop the processes piecemeal the usual ways with `pm2`.&nbsp;  The processes you would shut down are all named `Start___`, where `___` represents the name of one of the edge-microservice components.&nbsp;  Actually you would also want to shut down the stray `node` process there as well, which is an artifact of this unfinished approach.
+
+This script is the `StopEdgeEndpoints.sh` BASH script in `src/run-scripts`.
 
 
 ## Conclusion
