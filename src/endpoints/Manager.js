@@ -8,7 +8,7 @@ export default class Manager extends AEndpoint {
     
     constructor() /* verified */ {
         super();
-        this.port = 31005;
+        this.port = 31001;
         this.name = "Manager";
         this.store = new Storage();
     }

@@ -8,8 +8,9 @@ import Storage from "../storage/Storage.js";
 export default class Reader extends AEndpoint {
     constructor() {
         super();
-        this.port = 31003;
+        this.port = 31005;
         this.name = "Reader";
+        this.store = new Storage();
     }
 
     initExternalListeners() {
@@ -18,7 +19,9 @@ export default class Reader extends AEndpoint {
     }
     
     initGetter() {
-        this.app.get("/patient/:id/:from/:to", (req, res) => {
+        this.app.get("get-readings/:id/:from/:to", (req, res) => {
+            let { id, from, to } = req.params;
+            console.log(`cruft : id, from, to:`, id, ",", from, ",", to);
         });
     }
     
@@ -26,11 +29,13 @@ export default class Reader extends AEndpoint {
         /* No operations: not a pub-sub publisher or subscriber. */
     }
     
-    // run() {
-    //     this.#app.listen(this.#port);
-    //     console.log(`Reader listening on port ${ this.#port } for calls to ... .`);
-    // }
-
-    getReadings() { }
+    getReadings(id, from, to) {
+        return this.store.getPatientReadings(id, from, to);
+    }
+    
+    run() {
+        super.run();
+        this.store.init();
+    }
 }
 

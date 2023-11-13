@@ -10,7 +10,7 @@ export default class Writer extends AEndpoint {
     
     constructor() {
         super();
-        this.port = 31001;
+        this.port = 31003;
         this.name = "Writer";
         this.store = new Storage();
     }
