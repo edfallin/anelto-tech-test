@@ -1,11 +1,8 @@
 
-# %cruft : finish code and revive
-
-
 pm2 start node ./src/run-scripts/StartWriter.js
 pm2 start node ./src/run-scripts/StartReader.js
 pm2 start node ./src/run-scripts/StartManager.js
-#pm2 start node src/run-scripts/StartWatcher.js
+pm2 start node src/run-scripts/StartWatcher.js
 
 echo ""
 echo ""
@@ -23,6 +20,7 @@ echo "        A reading POST body consists of { patientId, timestamp, systolic, 
 echo ""
 
 echo "    Request past readings at GET http://localhost:31005/get-readings/id/from/to."
+echo "        From and to are dates / date-times in a URL-encoding-friendly format, such as 11-10-2023."
 
 echo ""
 

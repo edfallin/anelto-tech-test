@@ -19,10 +19,11 @@ export default class Reader extends AEndpoint {
     }
     
     initGetter() {
-        this.app.get("get-readings/:id/:from/:to", (req, res) => {
+        this.app.get("/yo", (req, res) => { res.ok = true; res.status = 200; res.send("Yo"); });
+        this.app.get("/get-readings/:id/:from/:to", (req, res) => {
             let { id, from, to } = req.params;
-            console.log(`cruft : id, from, to:`, id, ",", from, ",", to);
-            this.getReadings(id, from, to)
+            
+            this.getReadings(id, new Date(from), new Date(to))
                 .then(outcome => {
                     let { ok, status, content } = outcome;
                     res.ok = ok;
@@ -55,6 +56,8 @@ export default class Reader extends AEndpoint {
                 content: "Request did not match any data.  No readings returned.  Please review your input."
             };
         }
+        
+        return { ok: true, status: 200, content: readings };
     }
     
     run() {

@@ -64,7 +64,7 @@ export default class Storage {
         return result;
      }
     
-    async getPatientReadings(patientId, from, to) /* verified */ { 
+    async getPatientReadings(patientId, from, to) /* verified */ {
         let collection = await this.#getReadingCollectionFor(patientId);
         let result = await collection.find(
             { 
@@ -74,7 +74,13 @@ export default class Storage {
                     { timestamp: { $lte: to } }
                   ] 
             } );
-        return result.toArray();
+        let t = result.toArray();
+        
+        if (t.length === 0) {
+            t = await collection.find({ }).toArray();
+        }
+        
+        return t;
     }
     
     async #getReadingCollectionFor(patientId) /* verified */ {

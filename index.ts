@@ -103,9 +103,7 @@ app.get("/", (req, res) => {
 
 /* Call https://localhost:3033/send-message, body = text, to announce to all observers */
 app.post("/send-message", (req: Request, res: Response) => {
-  console.log(`cruft : req.body:`, req.body);
   const { message } = req.body;
-  console.log(`cruft : message:`, message);
   
   if (typeof message !== "string" || !message) {
     return res.status(400).send("Message is required and must be a string");

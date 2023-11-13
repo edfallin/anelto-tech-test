@@ -34,7 +34,6 @@ export default class Manager extends AEndpoint {
     initRemover() /* verified */ {
         this.app.delete("/remove-patient/:patientId", (req, res) => {
             let patientId = req.params.patientId;
-            console.log(`cruft : patientId:`, patientId);
             this.unstorePatient(patientId)
                 .then(outcome => {
                     let { ok, status, content } = outcome;

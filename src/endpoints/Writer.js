@@ -21,7 +21,6 @@ export default class Writer extends AEndpoint {
     }
     
     initAdder() {
-        /* %cruft, add output to pub-sub here */
         this.app.post("/add-reading/", (req, res) => {
             let reading = req.body;
 
@@ -57,10 +56,8 @@ export default class Writer extends AEndpoint {
     }
     
     async publishReading(reading) {
-        console.log(`cruft : @publishReading(), json:`, reading);
         let message = { event: "new-reading", content: reading };
         let json = JSON.stringify(message);
-        console.log(`cruft : json:`, json);
     
         let post = {
             method: "post",
