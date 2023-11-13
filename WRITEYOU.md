@@ -65,21 +65,21 @@ All persistent storage is through the appropriately named `Storage` component.&n
 
 There are many, many, many improvements possible.&nbsp;  This example doesn't even come close to an MVP.&nbsp;  Let's look at this in two stages: MVP and LOP (later ongoing product).
 
-### MVP
+### MVP improvements
 
 As before, these are in no order.
 
 | Classification | Improvement needed   | Comments |
-|----------------|----------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Responsiveness | Switch away from `toArray()` when retrieving readings | Chokepoint for large data retrievals, which are likely.&nbsp;  Instead, cursoring and paging make sense, with some effects on the API signature.   |
-| Security | Add authentorization (see term definition in _Intro_) | Of course.&nbsp;  Required and desirable.&nbsp;  See discussion below.  |
-| Responsiveness | Switch to time-series storage for readings   | This MongoDb type is optimized for the kind of retrieval needed here.   |
+|-|-|-|
+| Responsiveness | Switch away from `toArray()` when retrieving readings | Chokepoint for large data retrievals, which are likely.&nbsp;  Instead, cursoring and paging make sense, with some effects on the API signature. |
+| Security | Add authentorization (see term definition in _Intro_) | Of course.&nbsp;  Required and desirable.&nbsp;  See discussion below. |
+| Responsiveness | Switch to time-series storage for readings   | This MongoDb type is optimized for the kind of retrieval needed here. |
 | Responsiveness | Add indexes and make other MongoDb-specific improvements | Whatever MongoDb offers for improving data return times, that should be used, because the data sets are likely to get very large |
-| Responsiveness | Sharding, probably   | Data for individual patients may be large, but especially data across many patients will really get voluminous.&nbsp;  Dividing patients into regions (whether disjunct geographically, or more notional, like overlapping area codes) and then having separate shards for each region would help keep overall data-store sizes smaller.  |
+| Responsiveness | Sharding, probably   | Data for individual patients may be large, but especially data across many patients will really get voluminous.&nbsp;  Dividing patients into regions (whether disjunct geographically, or more notional, like overlapping area codes) and then having separate shards for each region would help keep overall data-store sizes smaller. |
 | Reliability | Logging  | The different services need to journal what they're doing, because even when the code is under test and 100% reliable, the service mesh is not. |
 | Reliability | Exception catching, error trapping, input validation  | Didn't have time to catch 'em all, or really any of them.&nbsp;  Obviously in real life, a system needs to be robust enough to stay running and stable against garbage inputs, offline system components, and so on. |
-| Security | Input validation  | Speaks for itself.   |
-| Reliability | Data journaling   | Not quite the same as the journal-like logging I mentioned already, this would be a record of the operations that were conducted so the state could be rolled forward after a major crash.&nbsp;  My idea includes journaling when the data store is completely offline, allowing things to continue in a half-normal fashion while the cloud engineers scramble to wipe up the coffee.   |
+| Security | Input validation  | Speaks for itself. |
+| Reliability | Data journaling   | Not quite the same as the journal-like logging I mentioned already, this would be a record of the operations that were conducted so the state could be rolled forward after a major crash.&nbsp;  My idea includes journaling when the data store is completely offline, allowing things to continue in a half-normal fashion while the cloud engineers scramble to wipe up the coffee. |
 | Responsiveness | Cloud scaling set-up | Of course on a real cloud, gateways perform load-balancing and spin-up of metered functions, containers, and whatnot, in conjunction with other systems / features designed for ultra-quick response times.&nbsp;  I mention it here so you know I know about it, but also just to mention that flexible scaling is most of the point of the cloud, so it would have to be set up well and improvements always looked for. |
 
 
@@ -90,17 +90,22 @@ Authentication and authorization are of course absolutely necessary.&nbsp;  I wo
 For authorization to retrieve or monitor readings, one would have to be the originating patient or else their doctor (or delegate).&nbsp;  For these purposes, I would have a separate, typical system of login screens with salted and hashed passwords.&nbsp;  I would still use a JWT bearer token system here, not sessions, but would not use third-party servers for any OAuth2-style validation of identities / claims.&nbsp;  All servers would be in-house (well, really, part of the virtual private cloud).
 
 
-### LOP
+#### Consistency & co.
+
+One might well wonder if the system can maintain data consistency under realistic workloads or complex situations.&nbsp;  As long as patient data is arriving linearly, addressed more or less linearly, and not aggregated across patients in anything like real time, it doesn't look like data consistency would be a big issue compared to the volume arriving.&nbsp;  But probably I'm missing something!&nbsp;  This is the last thing I'm typing, so it's too late now.&nbsp;  Jaa ne!
+
+
+### LOP improvements
 
 As usual, these are in no order.
 
-| Classification | Improvement needed   | Comments   |
-|----------------|----------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Security | Re-registration of auth info  | Eventually there will be some need to replace keys for authentorization, so something needs to be written for it.   |
-| Generalization | Slow copying of sanitized readings to a relational store | Eventually someone will want to do some kind of study of the data across patients, so for those who opt in, having the data drizzle into a separate relational store, first stripped of all personal identifiers, will enable studies of social health statistics, etc.   |
+| Classification | Improvement needed   | Comments |
+|-|-|-|
+| Security | Re-registration of auth info  | Eventually there will be some need to replace keys for authentorization, so something needs to be written for it. |
+| Generalization | Slow copying of sanitized readings to a relational store | Eventually someone will want to do some kind of study of the data across patients, so for those who opt in, having the data drizzle into a separate relational store, first stripped of all personal identifiers, will enable studies of social health statistics, etc. |
 | Responsiveness | Caching, maybe | Data of this kind doesn't seem readily amenable to caching, but who knows?&nbsp;  If system monitoring (see below) shows that there is a lot of locality of reference, then caching is definitely advisable to speed up data returns. |
 | Responsiveness | Ongoing system monitoring  | Not only are noticeable latencies looked for, but anyplace that seems disproportionately slow, or shows an undesirable latency trendline.&nbsp;  This monitoring gets development ahead of the game and makes it easier to find forgotten inefficiencies.&nbsp;  (Or brand-new ones!) |
-| Reliability | Ongoing system monitoring  | Yes, it's the same thing, but it's so nice I listed it twice, where "nice" means "vitally necessary" for the same kinds of reasons as in the first listing.   |
+| Reliability | Ongoing system monitoring  | Yes, it's the same thing, but it's so nice I listed it twice, where "nice" means "vitally necessary" for the same kinds of reasons as in the first listing. |
 
 
 ## Known problems
