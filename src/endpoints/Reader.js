@@ -19,7 +19,6 @@ export default class Reader extends AEndpoint {
     }
     
     initGetter() {
-        this.app.get("/yo", (req, res) => { res.ok = true; res.status = 200; res.send("Yo"); });
         this.app.get("/get-readings/:id/:from/:to", (req, res) => {
             let { id, from, to } = req.params;
             
