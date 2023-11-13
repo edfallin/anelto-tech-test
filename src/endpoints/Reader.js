@@ -18,7 +18,7 @@ export default class Reader extends AEndpoint {
     }
     
     initGetter() {
-        this.app.get("/patient/{id}/{from}/{to}", (req, res) => {
+        this.app.get("/patient/:id/:from/:to", (req, res) => {
         });
     }
     

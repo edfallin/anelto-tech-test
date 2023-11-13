@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec ts-node run-ts/index.ts",
+    "dev": "nodemon --exec ts-node index.ts",
     "test": "node ./node_modules/risei/index.js",
     "trial-start": "bash src/run-scripts/StartEdgeEndpoints.sh",
     "trial-stop": "bash src/run-scripts/StopEdgeEndpoints.sh"
