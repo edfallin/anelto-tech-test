@@ -5,9 +5,11 @@
 
 This project is a primitive and incomplete implementation of a patient health-data monitoring and storing system.&nbsp;  This system is meant to emulate a cloud environment, meaning that it is broken up into microservices.&nbsp;  These communicate mostly with a separate data store, and to a small degree with each other via a (provided) pub-sub emulation.
 
-There is no authentication / authorization (AKA "authentorization") in this system.&nbsp;  Adding it might have effects on the design / structure, although not with absolute necessity.&nbsp;  My meaning is detailed later on here.
+There is no authentication / authorization (or "authentorization") in this system.&nbsp;  Adding it might have effects on the design / structure, although not with absolute necessity.&nbsp;  I explain what I mean later on.
 
-The known problems with this code are laid out at the end.
+Testing and trying things out are described [here](#so-you-want-to-run-the-project).
+
+The known problems with the code are laid out at the end.
 
 
 ## Design
@@ -49,4 +51,21 @@ As mentioned earlier, there is no streaming capability here.
 
 All persistent storage is through the appropriately named `Storage` component.&nbsp;  This object opens a connection to a MongoDb database and saves, retrieves, and possibly deletes data there.
 
+
+## Design limitations
+
+%cruft : add here!
+
+
+## Improvements possible
+
+%cruft : add here!
+
+
+## Known problems
+
+I have had to leave off development while many things are incomplete or even still broken.&nbsp;  Therefore there is a long list of known problems, even excluding the design limitations stated earlier.
+
+
+## So you want to run the project
 
