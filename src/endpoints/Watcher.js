@@ -36,7 +36,7 @@ export default class Watcher extends AEndpoint {
     initGetter() {
     //     this.app.get("/get-current/:id", (req, res) => {
     //         let id = req.params.id;
-    //         let content = this.getCurrent(id);
+    //         let content = this.getCurrent(this.current, id);
     //        
     //         res.ok = ok;
     //         res.status = status
@@ -69,21 +69,21 @@ export default class Watcher extends AEndpoint {
     //     this.current.push(event.content);
     }
 
-    getCurrent(id) {
+    getCurrent(current, id) {
         // All patients' readings are stored together.
-        let current = this.current
+        let forPatient = current
             .filter(x => x.patientId === id);
 
         // Copying to avoid post-removal fails.
-        let output = [ ...current ];
+        let output = [ ...forPatient ];
 
-        // Now stale, so dumped.
-        this.dropFrom(this.current, output);
+        // Originals are now stale, so dumped.
+        this.dropFrom(current, output);
 
         return output;
     }
 
-    dropFrom(current, readings) {
+    dropFrom(current, readings) /* passed */ {
         for (let reading of readings) {
             // If these reading values match, all match.
             let at = current.findIndex(
