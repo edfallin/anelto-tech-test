@@ -62,7 +62,7 @@ There are many, many, many improvements possible.&nbsp;  This example doesn't ev
 
 ### MVP improvements
 
-As before, these are in no order.
+These are in no order.
 
 | Classification | Improvement needed   | Comments |
 |-|-|-|
@@ -92,7 +92,7 @@ One might well wonder if the system can maintain data consistency under realisti
 
 ### LOP improvements
 
-As usual, these are in no order.
+As before, these are in no order.
 
 | Classification | Improvement needed   | Comments |
 |-|-|-|
