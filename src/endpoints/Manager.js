@@ -44,7 +44,7 @@ export default class Manager extends AEndpoint {
         });
     }
     
-    wireToPubSub() /* ok */ {
+    async wireToPubSub() /* ok */ {
         /* No operations: not a pub-sub publisher or subscriber. */
     }
     
@@ -92,6 +92,7 @@ export default class Manager extends AEndpoint {
     
     run() /* verified */ {
         super.run();
+        this.wire
         this.store.init();
     }
 }

@@ -44,32 +44,34 @@ export default class Watcher extends AEndpoint {
     //     });
     }
 
-    wireToPubSub() {
-    //     // Wiring by registering URL so messages are sent here.
-    //     await fetch(
-    //         "https:localhost:3033/register",
-    //         { method: "post",
-    //             body: `http://localhost:${ this.port }/add-current`,
-    //             headers: {
-    //                 "Content-Type": "text/plain"
-    //             }
-    //         }
-    //     );
+    async wireToPubSub() {
+        // Wiring by registering URL so messages are sent here.
+        await fetch(
+            "https:localhost:3033/register",
+            { method: "post",
+                body: `http://localhost:${ this.port }/add-current`,
+                headers: {
+                    "Content-Type": "text/plain"
+                }
+            }
+        );
     }
+    
+    
 
     maybeAddToCurrent(message) {
-    //     let event = JSON.parse(message);
-    //    
-    //     // The maybe: Don't add if not a new reading.
-    //     if (event.type !== "new-reading") {
-    //         return;
-    //     }
-    //    
-    //     // Actually adding, if a new reading.
-    //     this.current.push(event.content);
+        let event = JSON.parse(message);
+
+        // The maybe: Don't add if not a new reading.
+        if (event.type !== "new-reading") {
+            return;
+        }
+
+        // Actually adding, if a new reading.
+        this.current.push(event.content);
     }
 
-    getCurrent(current, id) {
+    getCurrent(current, id) /* passed */ {
         // All patients' readings are stored together.
         let forPatient = current
             .filter(x => x.patientId === id);

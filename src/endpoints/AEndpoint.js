@@ -12,7 +12,6 @@ export default class AEndpoint {
     constructor() /* verified */ {
         this.initHttp();
         this.initExternalListeners();
-        this.wireToPubSub();
     }
     
     initHttp() /* verified */ {
@@ -27,12 +26,13 @@ export default class AEndpoint {
         });
     }
     
-    wireToPubSub() {
+    async wireToPubSub() {
         throw new Error("wireToPubSub() must be implemented in subclass.");
     }
     
     run() /* verified */ {
         this.app.listen(this.port);
         console.log(`${ this.name } listening on port ${ this.port }.`);
+        this.wireToPubSub().then(() => { });
     }
 }
