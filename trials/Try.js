@@ -1,6 +1,6 @@
 /**/
 
-import Storage from "./storage/Storage.js";
+import Storage from "../src/storage/Storage.js";
 
 
 // Target store instance.

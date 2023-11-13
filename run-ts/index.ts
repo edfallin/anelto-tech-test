@@ -36,7 +36,7 @@ class MessageQueue {
      NB: No removal mechanism for events. */
   public enqueueMessage(message: string): void {
     this.queue.push(message);
-    console.log("Message added to queue");
+    console.log("Message added to queue: " + message);
   }
 
   public broadcastMessage(): void {
@@ -103,6 +103,7 @@ app.get("/", (req, res) => {
 
 /* Call https://localhost:3033/send-message, body = text, to announce to all observers */
 app.post("/send-message", (req: Request, res: Response) => {
+  console.log(`cruft : req.body:`, req.body);
   const { message } = req.body;
   console.log(`cruft : message:`, message);
   
