@@ -22,15 +22,39 @@ export default class Reader extends AEndpoint {
         this.app.get("get-readings/:id/:from/:to", (req, res) => {
             let { id, from, to } = req.params;
             console.log(`cruft : id, from, to:`, id, ",", from, ",", to);
+            this.getReadings(id, from, to)
+                .then(outcome => {
+                    let { ok, status, content } = outcome;
+                    res.ok = ok;
+                    res.status = status
+                    res.send(content)
+                });
         });
     }
     
-    wireToPubSub() {
+    wireToPubSub() /* ok */ {
         /* No operations: not a pub-sub publisher or subscriber. */
     }
     
-    getReadings(id, from, to) {
-        return this.store.getPatientReadings(id, from, to);
+    async getReadings(id, from, to) {
+        let readings = await this.store.getPatientReadings(id, from, to);
+        return this.interpretReadings(readings);
+    }
+    
+    interpretReadings(readings) {
+        if (!Array.isArray(readings)) {
+            return { 
+                ok: false, status: 400, 
+                content: "Bad request contents.  No readings returned.  Please review your input." 
+            };
+        }
+        
+        if (readings.length === 0) {
+            return {
+                ok: true, status: 200,
+                content: "Request did not match any data.  No readings returned.  Please review your input."
+            };
+        }
     }
     
     run() {

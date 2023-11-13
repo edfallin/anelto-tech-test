@@ -62,7 +62,7 @@ export default class Manager extends AEndpoint {
             else {
                 return { 
                     ok: false, status: 400, 
-                    content: "Bad request data.  Patient not added.  Please review your input." 
+                    content: "Bad request contents.  Patient not added.  Please review your input." 
                 };
             }
         }
@@ -83,7 +83,7 @@ export default class Manager extends AEndpoint {
             else {
                 return { 
                     ok: false, status: 400, 
-                    content: "Bad request data.  Patient not removed.  Please review your input." 
+                    content: "Bad request contents.  Patient not removed.  Please review your input." 
                 };
             }
         }
