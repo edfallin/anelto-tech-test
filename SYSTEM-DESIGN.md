@@ -9,7 +9,7 @@ There is no authentication / authorization (or "authentorization") in this syste
 
 Testing and trying things out are described somewhere near [here](#so-you-want-to-run-the-project).
 
-The known problems with the code are laid out at the end.
+The known problems with the code are laid out around [here](#known-problems).
 
 
 ## Design
@@ -18,7 +18,7 @@ This system consists of several "edge" microservices which are meant to be calle
 
 The microservice that adds individual readings for a patient also publishes a message to the pub-sub emulation as they are saved, so that they may be picked up separately by real-time monitoring services.
 
-The microservice for monitoring patient readings is implemented as a plain call-and-response RESTful HTTP server, meaning that to receive continuous readings at a client end, the front end would need to use something like a long-polling system.&nbsp;  This service also listens to events from the pub-sub emulation and stores them in memory for retrieval when asked for (and then disposal so they are not repeated).
+The microservice for monitoring patient readings is implemented as a plain call-and-response RESTful HTTP server, meaning that to receive continuous readings at a client end, the front end would need to use something like a long-polling system.&nbsp;  This service also listens to events from the pub-sub emulation and stores them in memory for retrieval when asked for (and then disposes them so they are not repeated).
 
 The data store is a wrapper around MongoDb database calls.&nbsp;  In the local pseudo-cloud, this is just the default database server on the local machine.&nbsp;  In real life, this would most likely be a managed instance of the database hosted by the cloud provider.
 
@@ -54,11 +54,6 @@ As mentioned earlier, there is no streaming capability here.
 #### Storage
 
 All persistent storage is through the appropriately named `Storage` component.&nbsp;  This object opens a connection to a MongoDb database and saves, retrieves, and possibly deletes data there.
-
-
-## Design limitations
-
-%cruft : add here!
 
 
 ## Improvements possible
