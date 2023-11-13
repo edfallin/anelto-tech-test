@@ -56,7 +56,7 @@ export default class Writer extends AEndpoint {
     }
     
     async publishReading(reading) {
-        let message = { event: "new-reading", content: reading };
+        let message = { type: "new-reading", content: reading };
         let json = JSON.stringify(message);
     
         let post = {
@@ -65,7 +65,7 @@ export default class Writer extends AEndpoint {
                 "Content-Type": "application/json"
             },
             body: { 
-                message 
+                message: json 
             }
         };
         
